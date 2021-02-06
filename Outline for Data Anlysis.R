@@ -66,4 +66,9 @@ class(week1Part1) # check on its class
   library(dplyr)
   nrc_sent <- data.frame(data %>% group_by(sentiment) %>% tally())
   nrc_sent
+  
+# Download Stock Data
+  
+  getSymbols("GME", from = "2021-01-15", to = "2021-01-20")
+  GME
 
