@@ -64,5 +64,6 @@ class(week1Part1) # check on its class
     coord_flip()
   
   library(dplyr)
-  nrc_sent <- data %>% group_by(sentiment) %>% tally()
+  nrc_sent <- data.frame(data %>% group_by(sentiment) %>% tally())
   nrc_sent
+
