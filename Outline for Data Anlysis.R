@@ -63,4 +63,6 @@ class(week1Part1) # check on its class
     geom_bar() +
     coord_flip()
   
-
+  library(dplyr)
+  nrc_sent <- data %>% group_by(sentiment) %>% tally()
+  nrc_sent
