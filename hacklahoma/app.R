@@ -18,6 +18,7 @@ library(stringr)
 library(tidyverse)
 library(dplyr)
 library(RColorBrewer)
+library(quantmod)
 #source("mega.R") # this broke it
 
 # Define UI for application that draws a histogram
@@ -58,7 +59,7 @@ server <- function(input, output, session) {
 
     # Reddit Graphs
     
-    # necessary code
+    # Necessary code - Reddit Sentiment Analysis
     
     # Actual Analysis
     
@@ -248,6 +249,33 @@ server <- function(input, output, session) {
     sentiment <- get_sentiments("loughran")
     data_loughran <- inner_join(data, sentiment, by = "word")
     
+    # Necessary Code - GME Stock Graphs
+    
+    getSymbols("GME", from ="2021-1-19", to ="2021-2-4")
+    
+    df.stocks <- fortify(GME)
+    
+    p <- ggplot(data=df.stocks, aes(x=Index)) +
+        geom_line(aes(y = GME.Adjusted), color = "darkred", size = 1) +
+        xlab("Date") +
+        ylab("Adjusted Price")
+    
+    ## Create date variables to highlight time range of interest
+    jan19 <- as.Date("2021-1-19")
+    
+    jan20 <- as.Date("2021-1-20")
+    
+    jan22 <- as.Date("2021-1-22")
+    
+    jan25 <- as.Date("2021-1-25")
+    
+    jan26 <- as.Date("2021-1-26")
+    
+    feb2 <- as.Date("2021-2-2")
+    
+    feb3 <- as.Date("2021-2-3")
+    
+    
         # Render the output
     
         output$RedditJan1 <- renderPlot({
@@ -418,18 +446,64 @@ server <- function(input, output, session) {
         
         # Stocks Graph - run all the dates options again in 4 if statements
     
-    # output$stonks <- renderPlot({
-    #     
-    # })    
+    output$stonks <- renderPlot({
+        if(input$timePeriod == "Jan 16-19, 2021"){
+            
+            ## Range: 1/19 - 1/20
+            rect_jan19 <- data.frame(xmin=jan19, xmax=jan20, ymin=-Inf, ymax=Inf)
+            str(rect_jan19)
+            g <- p + geom_rect(data=rect_jan19, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax),
+                               color="grey20",
+                               alpha=0.5,
+                               inherit.aes = FALSE)
+            g # print the graph
+        }
         
-    # output$distPlot <- renderPlot({
-    #     # generate bins based on input$bins from ui.R
-    #     x    <- faithful[, 2]
-    #     bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    # 
-    #     # draw the histogram with the specified number of bins
-    #     hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    # })
+        else{
+            if(input$timePeriod == "Jan 20-22, 2021"){
+                
+                ## Range: 1/20 - 1/22
+                rect_jan20 <- data.frame(xmin=jan20, xmax=jan22, ymin=-Inf, ymax=Inf)
+                str(rect_jan20)
+                m <- p + geom_rect(data=rect_jan20, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax),
+                                   color="grey20",
+                                   alpha=0.5,
+                                   inherit.aes = FALSE)
+                m # print the graph
+                
+            }
+            
+            else{
+                if(input$timePeriod == "Jan 25-26, 2021"){
+                 
+                    ## Range: 1/25 - 1/26
+                    rect_jan25 <- data.frame(xmin=jan25, xmax=jan26, ymin=-Inf, ymax=Inf)
+                    str(rect_jan25)
+                    e <- p + geom_rect(data=rect_jan25, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax),
+                                       color="grey20",
+                                       alpha=0.5,
+                                       inherit.aes = FALSE)
+                    e # print the graph
+                    
+                }
+                
+                else{
+                    if(input$timePeriod == "Feb 4-6, 2021"){
+                        
+                        ## Range: 2/2 - 2/3
+                        rect_feb2 <- data.frame(xmin=feb2, xmax=feb3, ymin=-Inf, ymax=Inf)
+                        str(rect_feb2)
+                        r <- p + geom_rect(data=rect_feb2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax),
+                                           color="grey20",
+                                           alpha=0.5,
+                                           inherit.aes = FALSE)
+                        r # print the graph
+                    }
+                }
+            }
+        }
+    })
+        
 }
 
 # Run the application 
