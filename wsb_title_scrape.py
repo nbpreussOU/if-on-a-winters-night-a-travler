@@ -11,6 +11,8 @@ import praw
 from psaw import PushshiftAPI
 import datetime as dt
 
+# Insert the Client ID, Secret, and User_Agent for whatever Reddit account is associated with your registered app
+
 def scrapeTitles():
     reddit = praw.Reddit(client_id="insert_client_id_here",
                      client_secret="insert_client_secret_here",
