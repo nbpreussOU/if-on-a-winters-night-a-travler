@@ -1,4 +1,8 @@
 # WSB Title Scrape
+
+# For info on using PRAW to access the Reddit API, please read this site: https://praw.readthedocs.io/en/latest/
+# To use PRAW, you must first register an app with Reddit to access their API, info on that here: https://www.reddit.com/wiki/api
+
 import pandas
 import requests
 # from time import gmtime, strftime
@@ -8,9 +12,9 @@ from psaw import PushshiftAPI
 import datetime as dt
 
 def scrapeTitles():
-    reddit = praw.Reddit(client_id="7HuVGrxZwvj0fA",
-                     client_secret="07pRQvVQW9suS_oPCDeYGRp4yeQ",
-                     user_agent="jupyter_notebook:test_reddit_api /u/Asterisk13")
+    reddit = praw.Reddit(client_id="insert_client_id_here",
+                     client_secret="insert_client_secret_here",
+                     user_agent="insert_user_agent_here")
     # set up connection
 
     # dates
