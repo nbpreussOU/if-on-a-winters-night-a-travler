@@ -1,3 +1,7 @@
+# Author: Leah Pomerantz
+# Hacklahoma
+# Feb 6, 2021
+
 # Library Statements
 
 library(tm)
@@ -50,3 +54,8 @@ data <- as_tibble(week1Part1.df3)
 data <- mutate(data, text = data$postTitles)
 data <- data %>% 
   unnest_tokens(word, text)
+
+# Download Stock Data
+
+getSymbols("GME", from = "2021-01-15", to = "2021-01-20")
+GME
