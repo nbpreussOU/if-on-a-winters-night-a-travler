@@ -1,3 +1,5 @@
+# For info on using PRAW to access the Reddit API, please read this site: https://praw.readthedocs.io/en/latest/
+
 import pandas
 import requests
 from time import gmtime, strftime
@@ -6,16 +8,17 @@ from praw.models import MoreComments
 from psaw import PushshiftAPI
 import datetime as dt
 
+# Insert the Client ID, Secret, and User_Agent associated with your Reddit Account
 def main():
-    reddit = praw.Reddit(client_id="7HuVGrxZwvj0fA",
-                     client_secret="07pRQvVQW9suS_oPCDeYGRp4yeQ",
-                     user_agent="jupyter_notebook:test_reddit_api /u/Asterisk13")
+    reddit = praw.Reddit(client_id="insert_client_id_here",
+                     client_secret="insert_client_secret_here",
+                     user_agent="insert_user_agent_here")
     # set up connection
 
     
     api = PushshiftAPI(reddit)
-    start = int(dt.datetime(2020,10,6).timestamp())
-    end = int(dt.datetime(2020,1,1).timestamp())
+    start = int(dt.datetime(2021,2,4).timestamp())
+    end = int(dt.datetime(2020,2,3).timestamp())
 
     # set up variables
     commentList = []
@@ -25,7 +28,7 @@ def main():
     # loop through submissions
     
     # REMEMBER: Make an empty "raw_comics" folder before running
-    for submission in api.search_submissions(before=start, after=end, subreddit="polandball"):
+    for submission in api.search_submissions(before=start, after=end, subreddit="wallstreetbets"):
         submissionList.append(getSubmissionData(submission))
         # comments
         submission.comments.replace_more(limit=None)
