@@ -1,23 +1,26 @@
 # Carson Schlittler
 # 2/6 Hacklahoma
 
-# Stock vs. Sentiment Plots
+# Graphs for GME stocks
 library(tidyverse)
 library(quantmod)
 
 getSymbols("GME", from ="2021-1-19", to ="2021-2-4")
-#barChart(GME)
 
+# built-in graphs in quantmod:
+#barChart(GME)
 #candleChart(GME, multi.col=TRUE, theme="white")
 
+# convert xts to dataframe
 df.stocks <- fortify(GME)
 
+# create base plot of GME adjusted prices 
 p <- ggplot(data=df.stocks, aes(x=Index)) +
   geom_line(aes(y = GME.Adjusted), color = "darkred", size = 1) +
   xlab("Date") +
   ylab("Adjusted Price")
 
-## Create date variables to highlight time range of interest
+# Create date variables to highlight time range of interest
 jan19 <- as.Date("2021-1-19")
 
 jan20 <- as.Date("2021-1-20")
@@ -31,6 +34,9 @@ jan26 <- as.Date("2021-1-26")
 feb2 <- as.Date("2021-2-2")
 
 feb3 <- as.Date("2021-2-3")
+
+
+# Add rectangles that highlight time ranges of interest:
 
 ## Range: 1/19 - 1/20
 rect_jan19 <- data.frame(xmin=jan19, xmax=jan20, ymin=-Inf, ymax=Inf)
